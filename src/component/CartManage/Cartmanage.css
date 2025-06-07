@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cabin:ital,wght@0,400..700;1,400..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+.result_container_manage{
+    height: 90px;
+    width: 100%;
+    display: flex;
+    margin: 0 0 20px 0;
+    font-family: "Roboto", sans-serif;
+    /* background-color: blue; */
+}
+.result_container_manage .result_thumnail_manage{
+    width: 90px;
+    height: 100%;
+    margin: 0 15px 0 0 ;    
+}
+.result_container_manage .result_thumnail_manage img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.result_container_manage .result_container_content_manage{
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+}
+.result_container_manage .result_container_content_manage .result_content_title_manage{ 
+    margin: 0 0 10px 0;
+    font-family: "Cabin", sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+}
+.result_container_manage .result_container_content_manage .result_content_title_manage .height_light{
+    color: blue;
+    font-weight: bold;
+    font-size: 12px;
+}

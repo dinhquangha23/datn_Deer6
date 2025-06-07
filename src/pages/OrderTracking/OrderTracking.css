@@ -1,0 +1,27 @@
+.order_track_content {
+    /* background-color: blue; */
+    min-width: 1230px;
+    padding-bottom: 30px;
+    line-height: 60px;
+    font-size: 13px;
+    font-family: "cabin", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+
+}
+
+.order_track_content .Title_tracking {
+    width: 100%;
+    /* background-color: blue; */
+    height: 100%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.order_track_content .Title_tracking>span {
+    font-size: 40px;
+    font-family: "cabin", sans-serif;
+    font-weight: 400;
+}
