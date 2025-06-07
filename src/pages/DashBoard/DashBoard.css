@@ -4,10 +4,12 @@
     /* background-color: blue; */
     width: 100vw;
     display: flex;
+    overflow: hidden;
 }
 
 .Left_Navbar {
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    height: 100vh;
     display: flex;
     flex-direction: column;
     width: 256px;

@@ -79,9 +79,12 @@ export default function AccountManage({ noti }) {
   const [dataUser, setDataUser] = useState([]);
   const [dataModal, setDataModal] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalAddOpen, setModalAddOpen] = useState(false);
+  const [dataModalAdd, setDataModalAdd] = useState({});
   const [isCreate, setIsCreate] = useState(false);
   const [flagRender, setFlagrender] = useState(false);
   const [role, setRole] = useState();
+  const [password, setPassword] = useState(null);
 
   useEffect(() => {
     Axios.get("/user").then((res) => {
@@ -100,20 +103,13 @@ export default function AccountManage({ noti }) {
     console.log("data - modal :", dataModal);
   });
   const handleDelete = (data) => {
-    let url = `${import.meta.env.VITE_APP_API}user/${data.id}`;
-    let option = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(url, option)
-      .then((Response) => Response.json())
-      .then((response) => {
-        console.log(response);
+    console.log(data);
+    Axios.delete(`/deleteAccount/${data.id}`).then((res) => {
+      if (res.data.code == 200) {
+        noti(toast.success(res.data.message));
         setFlagrender((pre) => !pre);
-        noti(toast("xóa tài khoản thành công"));
-      });
+      }
+    });
   };
   const showModal = () => {
     setIsModalOpen(true);
@@ -121,36 +117,9 @@ export default function AccountManage({ noti }) {
   const handleOk = () => {
     setIsModalOpen(false);
     if (isCreate) {
-      let url = `${import.meta.env.VITE_APP_API}user`;
-      let option = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataModal),
-      };
-      fetch(url, option)
-        .then((Response) => Response.json())
-        .then((response) => {
-          console.log(response);
-          setFlagrender((pre) => !pre);
-          noti(toast("Thêm tài khoản thành công"));
-        });
-    } else {
-      Axios.put("user", {
-        idUser: dataModal.id,
-        fullName: dataModal.full_name,
-        phoneNumber: dataModal.phone,
-        address: dataModal.address,
-        role: dataModal.role,
-      }).then((res) => {
-        setFlagrender((pre) => !pre);
-        noti(toast.success(res.data.message));
-      });
-
       // let url = `${import.meta.env.VITE_APP_API}user`;
       // let option = {
-      //   method: "PUT",
+      //   method: "POST",
       //   headers: {
       //     "Content-Type": "application/json",
       //   },
@@ -159,17 +128,48 @@ export default function AccountManage({ noti }) {
       // fetch(url, option)
       //   .then((Response) => Response.json())
       //   .then((response) => {
-      //     console.log(response), setFlagrender((pre) => !pre);
-      //     noti(toast(response?.error));
+      //     console.log(response);
+      //     setFlagrender((pre) => !pre);
+      //     noti(toast("Thêm tài khoản thành công"));
       //   });
+    } else {
+      Axios.put("user", {
+        idUser: dataModal.id,
+        fullName: dataModal.full_name,
+        phoneNumber: dataModal.phone,
+        address: dataModal.address,
+        role: dataModal.role,
+        password: password,
+      }).then((res) => {
+        setFlagrender((pre) => !pre);
+        setPassword(null);
+        noti(toast.success(res.data.message));
+      });
     }
   };
   const handleCancel = () => {
+    setPassword(null);
     setIsModalOpen(false);
+    setModalAddOpen(false);
   };
   const handleEmailChange = (e) => {
     setDataModal((pre) => {
       return { ...pre, fullname: e.target.value };
+    });
+  };
+  const handleAddEmailChange = (e) => {
+    setDataModalAdd((pre) => {
+      return { ...pre, email: e.target.value };
+    });
+  };
+  const handleAddPasswordChange = (e) => {
+    setDataModalAdd((pre) => {
+      return { ...pre, password: e.target.value };
+    });
+  };
+  const handleSelectAddRoleChange = (value) => {
+    setDataModalAdd((pre) => {
+      return { ...pre, role: parseInt(value) };
     });
   };
   const handleNameChange = (e) => {
@@ -192,19 +192,33 @@ export default function AccountManage({ noti }) {
       return { ...pre, phone: e.target.value };
     });
   };
+  const handleChangePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleAddOk = () => {
+    console.log(dataModalAdd);
+    Axios.post("/addAccount", dataModalAdd).then((res) => {
+      if (res.data.code == 402) {
+        noti(toast.warning(res.data.message));
+      } else {
+        noti(toast.success(res.data.message));
+        setFlagrender((pre) => !pre);
+      }
+    });
+  };
   return (
     <div className="account_manage">
       <div className="addRequest">
-        {/* <Button
+        <Button
           type="primary"
           onClick={() => {
-            showModal();
-            setDataModal({});
+            setModalAddOpen(true);
+            setDataModalAdd({});
             setIsCreate(true);
           }}
         >
           Add New Account
-        </Button> */}
+        </Button>
       </div>
       <Table
         rowKey="id"
@@ -213,7 +227,7 @@ export default function AccountManage({ noti }) {
         pagination={false}
       />
       <Modal
-        title="Basic Modal"
+        title="Update Account"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -242,12 +256,12 @@ export default function AccountManage({ noti }) {
           />{" "}
         </div>
         <div>
-          <span style={{ display: "block" }}>Category</span>
+          <span style={{ display: "block" }}>Role</span>
           <Select
             value={dataModal.role}
             onChange={handleSelectRoleChange}
             style={{ width: "100%" }}
-            placeholder="Choise Color Variant"
+            placeholder="Choise role"
           >
             {role &&
               role.map((value) => (
@@ -278,6 +292,65 @@ export default function AccountManage({ noti }) {
             placeholder="Phone Number"
             onChange={handlePhoneNumberChange}
           />{" "}
+        </div>
+        <div>
+          <span>Password</span>
+          <input
+            className="modal_input_update"
+            disabled={dataModal.password == null ? true : false}
+            value={password || ""}
+            spellCheck="false"
+            type="text"
+            placeholder="change password"
+            onChange={handleChangePasswordChange}
+          />{" "}
+        </div>
+      </Modal>
+      {/* modal thêm tài khoản */}
+      <Modal
+        title="Add new Account"
+        open={modalAddOpen}
+        onOk={handleAddOk}
+        onCancel={handleCancel}
+      >
+        <div>
+          <span>Email </span>
+          <input
+            className="modal_input_update"
+            value={dataModalAdd?.email || ""}
+            spellCheck="false"
+            type="text"
+            disabled={isCreate ? false : true}
+            placeholder="Email or Fullname"
+            onChange={handleAddEmailChange}
+          />{" "}
+        </div>
+        <div>
+          <span>Pasword</span>
+          <input
+            className="modal_input_update"
+            value={dataModalAdd?.password || ""}
+            spellCheck="false"
+            type="text"
+            placeholder="Name"
+            onChange={handleAddPasswordChange}
+          />{" "}
+        </div>
+        <div>
+          <span style={{ display: "block" }}>Role</span>
+          <Select
+            value={dataModalAdd.role}
+            onChange={handleSelectAddRoleChange}
+            style={{ width: "100%" }}
+            placeholder="Choise role"
+          >
+            {role &&
+              role.map((value) => (
+                <Select.Option key={value.id} value={value.id}>
+                  {value.name}
+                </Select.Option>
+              ))}
+          </Select>{" "}
         </div>
       </Modal>
     </div>

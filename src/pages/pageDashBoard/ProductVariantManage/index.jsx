@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Axios from "../../../util/axios";
 import { use } from "react";
 
-export default function Productmanage({ noti }) {
+export default function ProductVariantManage({ noti }) {
   const columns = [
     {
       title: "Name",
@@ -32,15 +32,21 @@ export default function Productmanage({ noti }) {
       }),
     },
     {
-      title: "Second Image",
-      dataIndex: "second_image",
-      key: "second Image",
-      render: (text) => (
-        <img
-          style={{ width: "60px", height: "60px", objectFit: "cover" }}
-          src={`${import.meta.env.VITE_HOST_API}${text}`}
-        />
-      ),
+      title: "Size",
+      dataIndex: "size",
+      render: (text) => <a>{text}</a>,
+      key: "size",
+
+      onCell: () => ({
+        style: { width: 150 },
+      }),
+    },
+    {
+      title: "Color",
+      dataIndex: "color",
+      render: (text) => <a>{text}</a>,
+      key: "color",
+
       onCell: () => ({
         style: { width: 150 },
       }),
@@ -55,7 +61,7 @@ export default function Productmanage({ noti }) {
     },
     {
       title: "Category",
-      dataIndex: "category_name",
+      dataIndex: "category",
       key: "category",
     },
     {
@@ -63,7 +69,7 @@ export default function Productmanage({ noti }) {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button
+          {/* <Button
             type="primary"
             onClick={() => {
               showModal(record);
@@ -72,7 +78,7 @@ export default function Productmanage({ noti }) {
             }}
           >
             Update
-          </Button>
+          </Button> */}
           <Button
             type="primary"
             onClick={() => {
@@ -82,7 +88,7 @@ export default function Productmanage({ noti }) {
           >
             Delete
           </Button>
-          <Button
+          {/* <Button
             type="primary"
             onClick={() => {
               handleGetDataVariant(record);
@@ -90,7 +96,7 @@ export default function Productmanage({ noti }) {
             // danger
           >
             Add Varriant
-          </Button>
+          </Button> */}
         </Space>
       ),
     },
@@ -131,8 +137,8 @@ export default function Productmanage({ noti }) {
   // const [selectedValue,setSelectValue]= useState(2)
 
   useEffect(() => {
-    Axios.get("/getAllProduct").then((res) => {
-      // console.log(res.data.data);
+    Axios.get("/getVariant").then((res) => {
+      console.log(res.data.data);
       setDataProduct(res.data.data);
     });
   }, [flagRender]);
@@ -152,8 +158,8 @@ export default function Productmanage({ noti }) {
     console.log("data - modal :", dataModal);
   });
   const handleDelete = (data) => {
-    console.log(data.id);
-    Axios.delete(`/product/${data.id}`).then((res) => {
+    // console.log(data.id);
+    Axios.delete(`/deleteVariant/${data.id}`).then((res) => {
       if (res.data.code == 200) {
         noti(toast.success(res.data.message));
         setFlagrender((pre) => !pre);
@@ -319,7 +325,7 @@ export default function Productmanage({ noti }) {
   return (
     <div className="account_manage">
       <div className="addRequest">
-        <Button
+        {/* <Button
           type="primary"
           onClick={() => {
             showModal();
@@ -334,14 +340,13 @@ export default function Productmanage({ noti }) {
           }}
         >
           Add New Product
-        </Button>
+        </Button> */}
       </div>
       <Table
         rowKey="id"
         columns={columns}
         dataSource={dataProduct}
         pagination={false}
-        // scroll={{ y: 800 }}
       />
       <Modal
         title={isCreate ? "THÊM SẢN PHẦM" : "SỬA SẢN PHẨM"}

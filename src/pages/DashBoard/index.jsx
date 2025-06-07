@@ -8,6 +8,7 @@ import {
   HomeFilled,
   LockFilled,
   MenuUnfoldOutlined,
+  ProductOutlined,
   SettingOutlined,
   ShoppingCartOutlined,
   SkinOutlined,
@@ -40,6 +41,14 @@ export default function DashBoard({ noti }) {
     },
     {
       key: "3",
+      icon: <ProductOutlined />,
+      label: "Product Variant Manager",
+      onClick: () => {
+        navigate("productvariantmanage");
+      },
+    },
+    {
+      key: "4",
       icon: <MenuUnfoldOutlined />,
       label: "Category manager",
       onClick: () => {
@@ -47,7 +56,7 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "4",
+      key: "5",
       icon: <SkinOutlined />,
       label: "Size manager",
       onClick: () => {
@@ -55,7 +64,7 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "5",
+      key: "6",
       icon: <FormatPainterOutlined />,
       label: "Color manager",
       onClick: () => {
@@ -63,7 +72,7 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "6",
+      key: "7",
       icon: <EuroCircleOutlined />,
       label: "payment manager",
       onClick: () => {
@@ -71,12 +80,12 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "7",
+      key: "8",
       icon: <SettingOutlined />,
       label: "Option",
       children: [
         {
-          key: "71",
+          key: "81",
           label: "Home",
           icon: <HomeFilled />,
           onClick: () => {
@@ -84,7 +93,7 @@ export default function DashBoard({ noti }) {
           },
         },
         {
-          key: "72",
+          key: "82",
           label: "Logout Admin",
           icon: <LockFilled />,
           onClick: () => {

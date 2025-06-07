@@ -19,6 +19,7 @@ import {
   SizeManage,
   ColorManage,
   PaymentManage,
+  ProductVariantManage,
 } from "./pages";
 import SearchSide from "./component/SearchSide/SearchSide";
 
@@ -68,10 +69,20 @@ function App() {
             path="productmanage"
             element={<ProductManage noti={notify} />}
           />
-          <Route path="categorymanage" element={<CategoryManage />} />
-          <Route path="sizemanage" element={<SizeManage />} />
-          <Route path="colormanage" element={<ColorManage />} />
-          <Route path="paymentmanage" element={<PaymentManage />} />
+          <Route
+            path="categorymanage"
+            element={<CategoryManage noti={notify} />}
+          />
+          <Route path="sizemanage" element={<SizeManage noti={notify} />} />
+          <Route path="colormanage" element={<ColorManage noti={notify} />} />
+          <Route
+            path="paymentmanage"
+            element={<PaymentManage noti={notify} />}
+          />
+          <Route
+            path="productvariantmanage"
+            element={<ProductVariantManage noti={notify} />}
+          />
         </Route>
         {/* end dash board */}
         <Route path="/login" element={<LoginPage noti={notify} />} />

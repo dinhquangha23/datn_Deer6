@@ -1,6 +1,7 @@
 .account_manage {
     /* background-color: blue; */
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    height: 95vh;
     padding: 10px 5px 20px 5px;
 }
 
@@ -23,6 +24,15 @@
 
 .account_manage .ant-table-content table tr th {
     border-bottom: 1px solid black;
+}
+
+.ant-table-wrapper {
+    height: 95%;
+    overflow-y: scroll;
+}
+
+.ant-table-wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 .ant-modal-content {
