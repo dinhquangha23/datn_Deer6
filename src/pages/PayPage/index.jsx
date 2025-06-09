@@ -196,6 +196,7 @@ export default function PayPage({ noti }) {
           console.log("thêm vào order và trả về", res);
           if (res.status == 200) {
             noti(toast("Đã Đặt Hàng Thành Công"));
+            nav("/order_tracking");
           }
         });
       }

@@ -1,4 +1,4 @@
-import { Button, Modal, Select, Space, Table } from "antd";
+import { Button, Input, Modal, Select, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import CartItem from "../../../component/CartItem";
 import CartManage from "../../../component/CartManage";
@@ -7,8 +7,16 @@ import "./OderManage.css";
 import { fomartMoney } from "../../../util";
 import { toast } from "react-toastify";
 import Axios from "../../../util/axios";
+import { useNavigate } from "react-router-dom";
+const { Search } = Input;
 
 function OderManage({ noti }) {
+  const nav = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") == null) {
+      nav("/login");
+    }
+  });
   const columns = [
     {
       title: "Tên Khách Hàng",
@@ -169,13 +177,13 @@ function OderManage({ noti }) {
   const [flagRender, setFlagrender] = useState(false);
 
   useEffect(() => {
-    // let url =`${import.meta.env.VITE_APP_API}payment`
-    // fetch(url).then((Response)=>Response.json())
-    // .then((response)=>setDataPay(response))
-
-    Axios.get("/order").then((res) => {
-      setDataPay(res.data.data);
-    });
+    if (localStorage.getItem("token") == null) {
+      nav("/login");
+    } else {
+      Axios.get("/order").then((res) => {
+        setDataPay(res.data.data);
+      });
+    }
   }, [flagRender]);
   useEffect(() => {
     if (isCreate) {
@@ -186,22 +194,6 @@ function OderManage({ noti }) {
     console.log("data - gếtver :", dataPay);
   });
   const handleDelete = (data) => {
-    // console.log("ha",data)
-    // let url = `${import.meta.env.VITE_APP_API}payment`;
-    // let option = {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // };
-    // fetch(url, option)
-    //   .then((Response) => Response.json())
-    //   .then((response) => {
-    //     console.log(response);
-    //     setFlagrender((pre) => !pre);
-    //     noti(toast("xóa kiện hàng thành công"));
-    //   });
     console.log(data);
     Axios.delete(`/order/${data.id}`).then((res) => {
       if (res.data.code == 200) {
@@ -220,11 +212,22 @@ function OderManage({ noti }) {
     setIsModalOpen(false);
     setDataModal([]);
   };
-
+  const handleSearch = (value) => {
+    Axios.get(`/orderSearch?search=${value}`).then((res) => {
+      setDataPay(res.data.data);
+    });
+  };
   return (
     <div className="account_manage">
       <div className="addRequest">
-        <Button
+        <div className="search_manage">
+          <Search
+            placeholder="input search text"
+            onSearch={handleSearch}
+            enterButton
+          />
+        </div>
+        {/* <Button
           type="primary"
           onClick={() => {
             setDataModal({});
@@ -232,8 +235,8 @@ function OderManage({ noti }) {
             setIsCreate(true);
           }}
         >
-          Add New Account
-        </Button>
+          Add New Order
+        </Button> */}
       </div>
       <Table
         rowKey="id"

@@ -1,8 +1,8 @@
-import { Button, Modal, Space, Table } from "antd";
+import { Button, Input, Modal, Space, Table } from "antd";
 import Axios from "../../../util/axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
+const { Search } = Input;
 export default function CategoryManage({ noti }) {
   const columns = [
     {
@@ -141,9 +141,21 @@ export default function CategoryManage({ noti }) {
     });
   };
   console.log("prop của categoryManage", { noti });
+  const handleSearch = (value) => {
+    Axios.get(`/categorySearch?search=${value}`).then((res) => {
+      setDataCategory(res.data.data);
+    });
+  };
   return (
     <div className="account_manage">
       <div className="addRequest">
+        <div className="search_manage">
+          <Search
+            placeholder="input search text"
+            onSearch={handleSearch}
+            enterButton
+          />
+        </div>
         <Button
           type="primary"
           onClick={() => {

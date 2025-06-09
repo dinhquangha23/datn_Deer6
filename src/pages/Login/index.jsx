@@ -44,10 +44,10 @@ export default function LoginPage({ noti }) {
       noti(toast["warning"]("Email không đúng định dạng"));
       return;
     }
-    // if (!checkPassword(passwordLogin)) {
-    //   noti(toast["warning"]("Mật khẩu cần lớn hơn 6 ký tự"));
-    //   return;
-    // }
+    if (!checkPassword(passwordLogin)) {
+      noti(toast["warning"]("Mật khẩu cần lớn hơn 6 ký tự"));
+      return;
+    }
 
     const dataLogin = {
       email: emailLogin,

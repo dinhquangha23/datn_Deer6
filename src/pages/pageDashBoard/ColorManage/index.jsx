@@ -1,7 +1,8 @@
-import { Button, Modal, Space, Table } from "antd";
+import { Button, Input, Modal, Space, Table } from "antd";
 import Axios from "../../../util/axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+const { Search } = Input;
 
 export default function ColorManage({ noti }) {
   const columns = [
@@ -109,10 +110,22 @@ export default function ColorManage({ noti }) {
       return { ...pre, color: e.target.value };
     });
   };
-  console.log("prop của categoryManage", { noti });
+
+  const handleSearch = (value) => {
+    Axios.get(`/colorSearch?search=${value}`).then((res) => {
+      setDataColor(res.data.data);
+    });
+  };
   return (
     <div className="account_manage">
       <div className="addRequest">
+        <div className="search_manage">
+          <Search
+            placeholder="input search text"
+            onSearch={handleSearch}
+            enterButton
+          />
+        </div>
         <Button
           type="primary"
           onClick={() => {

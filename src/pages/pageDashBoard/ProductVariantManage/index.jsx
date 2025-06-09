@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Flex, Modal, Select, Space, Table, Upload } from "antd";
+import { Button, Flex, Modal, Select, Space, Table, Upload, Input } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import Axios from "../../../util/axios";
 import { use } from "react";
+const { Search } = Input;
 
 export default function ProductVariantManage({ noti }) {
   const columns = [
@@ -322,9 +323,21 @@ export default function ProductVariantManage({ noti }) {
       });
     }
   };
+  const handleSearch = (value) => {
+    Axios.get(`/variantSearch?search=${value}`).then((res) => {
+      setDataProduct(res.data.data);
+    });
+  };
   return (
     <div className="account_manage">
       <div className="addRequest">
+        <div className="search_manage">
+          <Search
+            placeholder="input search text"
+            onSearch={handleSearch}
+            enterButton
+          />
+        </div>
         {/* <Button
           type="primary"
           onClick={() => {

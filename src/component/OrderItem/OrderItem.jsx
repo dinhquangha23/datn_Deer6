@@ -96,7 +96,7 @@ export default function OrderItem({ datatrack }) {
           </div>
 
           <span className="total_order">
-            Tổng tiền : {fomartMoney(datatrack?.fee + datatrack?.total_money)} đ
+            Tổng tiền : {fomartMoney(datatrack?.total_money)} đ
           </span>
         </div>
       </div>

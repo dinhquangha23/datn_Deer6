@@ -15,6 +15,7 @@ import SizeManage from "./pageDashBoard/SizeManage";
 import ColorManage from "./pageDashBoard/ColorManage";
 import PaymentManage from "./pageDashBoard/PaymentManage";
 import ProductVariantManage from "./pageDashBoard/ProductVariantManage";
+import OderManage from "./pageDashBoard/OrderManage";
 export {
   AllProduct,
   ProductDetail,
@@ -33,4 +34,5 @@ export {
   ColorManage,
   PaymentManage,
   ProductVariantManage,
+  OderManage,
 };

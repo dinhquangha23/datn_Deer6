@@ -1,7 +1,8 @@
-import { Button, Modal, Space, Table } from "antd";
+import { Button, Input, Modal, Space, Table } from "antd";
 import Axios from "../../../util/axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+const { Search } = Input;
 
 export default function PaymentManage({ noti }) {
   const columns = [
@@ -68,11 +69,23 @@ export default function PaymentManage({ noti }) {
     console.log("data - gếtver :", dataPayment);
   });
 
-  console.log("prop của categoryManage", { noti });
+  const handleSearch = (value) => {
+    Axios.get(`/paymentSearch?search=${value}`).then((res) => {
+      setDataPayment(res.data.data);
+    });
+  };
+
   return (
     <div className="account_manage">
       <div className="addRequest">
-        <Button
+        <div className="search_manage">
+          <Search
+            placeholder="input search text"
+            onSearch={handleSearch}
+            enterButton
+          />
+        </div>
+        {/* <Button
           type="primary"
           onClick={() => {
             setDataModal({});
@@ -81,7 +94,7 @@ export default function PaymentManage({ noti }) {
           }}
         >
           Add New Color
-        </Button>
+        </Button> */}
       </div>
       <Table
         rowKey="id"

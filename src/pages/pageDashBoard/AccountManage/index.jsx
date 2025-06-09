@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Space, Table, Modal, Select } from "antd";
+import { Button, Space, Table, Modal, Select, Input } from "antd";
 import "./AccountManage.css";
 import { toast } from "react-toastify";
 import Axios from "../../../util/axios";
+const { Search } = Input;
 
 export default function AccountManage({ noti }) {
   const columns = [
@@ -206,9 +207,21 @@ export default function AccountManage({ noti }) {
       }
     });
   };
+  const handleSearch = (value) => {
+    Axios.get(`/userSearch?search=${value}`).then((res) => {
+      setDataUser(res.data.data);
+    });
+  };
   return (
     <div className="account_manage">
       <div className="addRequest">
+        <div className="search_manage">
+          <Search
+            placeholder="input search text"
+            onSearch={handleSearch}
+            enterButton
+          />
+        </div>
         <Button
           type="primary"
           onClick={() => {

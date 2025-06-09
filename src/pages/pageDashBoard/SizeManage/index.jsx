@@ -1,8 +1,8 @@
-import { Button, Modal, Space, Table } from "antd";
+import { Button, Input, Modal, Space, Table } from "antd";
 import Axios from "../../../util/axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
+const { Search } = Input;
 export default function SizeManage({ noti }) {
   const columns = [
     {
@@ -109,10 +109,21 @@ export default function SizeManage({ noti }) {
       return { ...pre, size: e.target.value.toUpperCase() };
     });
   };
-  console.log("prop của categoryManage", { noti });
+  const handleSearch = (value) => {
+    Axios.get(`/sizeSearch?search=${value}`).then((res) => {
+      setDataSize(res.data.data);
+    });
+  };
   return (
     <div className="account_manage">
       <div className="addRequest">
+        <div className="search_manage">
+          <Search
+            placeholder="input search text"
+            onSearch={handleSearch}
+            enterButton
+          />
+        </div>
         <Button
           type="primary"
           onClick={() => {
@@ -121,7 +132,7 @@ export default function SizeManage({ noti }) {
             setIsCreate(true);
           }}
         >
-          Add New Category
+          Add New Size
         </Button>
       </div>
       <Table

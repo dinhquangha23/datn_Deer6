@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import "./DashBoard.css";
 import {
   BankFilled,
+  CodeSandboxOutlined,
   EuroCircleOutlined,
   FormatPainterOutlined,
   HomeFilled,
@@ -20,11 +21,25 @@ import OderManage from "../pageDashBoard/OrderManage";
 import Axios from "../../util/axios";
 
 export default function DashBoard({ noti }) {
+  const nav = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") == null) {
+      nav("/login");
+    }
+  });
   const outlet = useOutlet();
   const navigate = useNavigate();
   const items = [
     {
       key: "1",
+      icon: <CodeSandboxOutlined />,
+      label: "Order Manager",
+      onClick: () => {
+        navigate("ordermanage");
+      },
+    },
+    {
+      key: "2",
       icon: <UserOutlined />,
       label: "Account Manager",
       onClick: () => {
@@ -32,7 +47,7 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "2",
+      key: "3",
       icon: <ShoppingCartOutlined />,
       label: "Product Manager",
       onClick: () => {
@@ -40,7 +55,7 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "3",
+      key: "4",
       icon: <ProductOutlined />,
       label: "Product Variant Manager",
       onClick: () => {
@@ -48,7 +63,7 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "4",
+      key: "5",
       icon: <MenuUnfoldOutlined />,
       label: "Category manager",
       onClick: () => {
@@ -56,7 +71,7 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "5",
+      key: "6",
       icon: <SkinOutlined />,
       label: "Size manager",
       onClick: () => {
@@ -64,7 +79,7 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "6",
+      key: "7",
       icon: <FormatPainterOutlined />,
       label: "Color manager",
       onClick: () => {
@@ -72,7 +87,7 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "7",
+      key: "8",
       icon: <EuroCircleOutlined />,
       label: "payment manager",
       onClick: () => {
@@ -80,12 +95,12 @@ export default function DashBoard({ noti }) {
       },
     },
     {
-      key: "8",
+      key: "9",
       icon: <SettingOutlined />,
       label: "Option",
       children: [
         {
-          key: "81",
+          key: "91",
           label: "Home",
           icon: <HomeFilled />,
           onClick: () => {
@@ -93,11 +108,11 @@ export default function DashBoard({ noti }) {
           },
         },
         {
-          key: "82",
+          key: "92",
           label: "Logout Admin",
           icon: <LockFilled />,
           onClick: () => {
-            localStorage.removeItem("userID");
+            localStorage.clear();
             navigate("/login");
           },
         },
@@ -145,13 +160,17 @@ export default function DashBoard({ noti }) {
   };
 
   useEffect(() => {
-    const token_id = jwtDecode(localStorage.getItem("token")).id;
-    Axios.get(`/user/${token_id}`).then((res) => {
-      // console.log(res.data.data[0].role);
-      if (res.data.data[0].role !== 2) {
-        navigate("/");
-      }
-    });
+    if (localStorage.getItem("token") == null) {
+      nav("/login");
+    } else {
+      const token_id = jwtDecode(localStorage.getItem("token")).id;
+      Axios.get(`/user/${token_id}`).then((res) => {
+        // console.log(res.data.data[0].role);
+        if (res.data.data[0].role !== 2) {
+          navigate("/");
+        }
+      });
+    }
   }, []);
   const handleNavigate = () => {
     navigate("/dashboard");
@@ -168,7 +187,7 @@ export default function DashBoard({ noti }) {
         </div>
         <Menu
           mode="inline"
-          defaultSelectedKeys={["231"]}
+          defaultSelectedKeys={["1"]}
           openKeys={stateOpenKeys}
           onOpenChange={onOpenChange}
           style={{

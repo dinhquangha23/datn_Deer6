@@ -20,6 +20,7 @@ import {
   ColorManage,
   PaymentManage,
   ProductVariantManage,
+  OderManage,
 } from "./pages";
 import SearchSide from "./component/SearchSide/SearchSide";
 
@@ -83,6 +84,7 @@ function App() {
             path="productvariantmanage"
             element={<ProductVariantManage noti={notify} />}
           />
+          <Route path="ordermanage" element={<OderManage noti={notify} />} />
         </Route>
         {/* end dash board */}
         <Route path="/login" element={<LoginPage noti={notify} />} />
