@@ -89,6 +89,9 @@ export default function SizeManage({ noti }) {
         if (res.data.code == 201) {
           setFlagrender((pre) => !pre);
           noti(toast.success(res.data.message));
+        } else {
+          setFlagrender((pre) => !pre);
+          noti(toast.warning(res.data.message));
         }
       });
     } else {

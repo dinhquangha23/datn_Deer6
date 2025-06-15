@@ -101,25 +101,13 @@ export default function CategoryManage({ noti }) {
   const handleOk = () => {
     setIsModalOpen(false);
     if (isCreate) {
-      // let url = `${import.meta.env.VITE_APP_API}category`;
-      // let option = {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(dataModal),
-      // };
-      // fetch(url, option)
-      //   .then((Response) => Response.json())
-      //   .then((response) => {
-      //     console.log(response);
-      //     setFlagrender((pre) => !pre);
-      //     noti(toast("Thêm danh mục thành công"));
-      //   });
       Axios.post("/category", { name: dataModal.name }).then((res) => {
         if (res.data.code == 201) {
           setFlagrender((pre) => !pre);
           noti(toast.success(res.data.message));
+        } else {
+          setFlagrender((pre) => !pre);
+          noti(toast.warning(res.data.message));
         }
       });
     } else {

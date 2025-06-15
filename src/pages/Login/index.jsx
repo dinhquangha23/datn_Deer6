@@ -164,7 +164,9 @@ export default function LoginPage({ noti }) {
                 <i className="fab fa-linkedin-in" />
               </a>
             </div> */}
-            <span>or use your email for registration</span>
+            <span style={{ marginTop: "10px" }}>
+              Hoặc sử dụng Google Account để đăng nhập
+            </span>
             <input
               className="Name"
               type="text"
@@ -238,9 +240,10 @@ export default function LoginPage({ noti }) {
         <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-left">
-              <h1>Welcome Back!</h1>
+              <h1>Chào Mừng !</h1>
               <p>
-                To keep connected with us please login with your personal info
+                Giữ kết nối với chúng tôi bằng cách đăng nhập với thông tin của
+                bạn
               </p>
               <button
                 onClick={handleSingInButton}

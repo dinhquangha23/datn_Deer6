@@ -36,7 +36,6 @@ function App() {
   const isLoginPage =
     location.pathname === "/login" || location.pathname.includes("/dashboard");
   const navigate = useNavigate();
-  // console.log("location ", isLoginPage);
   const [showSearch, setShowSearch] = useState(false);
   const toggleShowSearch = () => {
     setShowSearch(!showSearch);
